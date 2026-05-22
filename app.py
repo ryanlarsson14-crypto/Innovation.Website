@@ -1049,6 +1049,5 @@ if check_password():
                     st.success(f"✅ No injury records found for {sel_player}.")
             else:
                 st.warning("⚠️ No Injury/Illness data detected.")
-            pass
             else:
-            st.info("👋 Upload data to begin.")
+                st.info("👋 Upload data to begin.")
