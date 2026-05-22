@@ -34,58 +34,69 @@ if check_password():
 
     st.markdown(f"""
     <style>
-    /* 1. Main Background */
-    .stApp {{ background-color: {CITY_WHITE} !important; }}
-
-    /* 2. UNIVERSAL BLACK TEXT - Targets almost everything in the main area */
-    /* This will force standard text, markdown, and labels to Black */
-    .main p, .main li, .main label, .main .stMarkdown p {{
-        color: #000000 !important;
-        -webkit-text-fill-color: #000000 !important;
+    /* 1. FORCE DARK NAVY BACKGROUND (Man City Navy) */
+    .stApp {{
+        background-color: {CITY_NAVY} !important;
     }}
 
-    /* 3. WIDGET LABELS - These are the grey titles above Selectboxes/Uploaders */
-    div[data-testid="stWidgetLabel"] p {{
-        color: #000000 !important;
-        font-weight: 800 !important; /* Extra Bold */
-        font-size: 1rem !important;
-    }}
-
-    /* 4. METRIC LABELS - Specifically target the grey label above big numbers */
-    div[data-testid="stMetricLabel"] p {{
-        color: #000000 !important;
-        font-weight: 800 !important;
-        font-size: 1rem !important;
-    }}
-
-    /* 5. METRIC VALUES - The big numbers themselves */
-    div[data-testid="stMetricValue"] > div {{
-        color: #000000 !important;
-    }}
-
-    /* 6. TABS - Make them deep black and bold */
-    button[data-baseweb="tab"] p {{
-        color: #000000 !important;
-        font-weight: 900 !important;
-    }}
-
-    /* 7. SIDEBAR - Remain White on Navy */
-    [data-testid="stSidebar"] p, 
-    [data-testid="stSidebar"] label, 
-    [data-testid="stSidebar"] h1, 
-    [data-testid="stSidebar"] span {{
+    /* 2. FORCE BRIGHT WHITE TEXT FOR ALL MAIN CONTENT */
+    /* This removes the "grey" look and makes text crisp */
+    .main p, .main li, .main label, .main span, .main .stMarkdown p {{
         color: #FFFFFF !important;
         -webkit-text-fill-color: #FFFFFF !important;
     }}
 
-    /* 8. HEADERS - Force solid black */
-    .main h1, .main h2, .main h3, .main h4 {{
-        color: #000000 !important;
+    /* 3. HEADERS - Use Sky Blue for a professional City look */
+    .main h1, .main h2, .main h3 {{
+        color: {CITY_SKY_BLUE} !important;
+    }}
+    .main h4, .main h5, .main h6 {{
+        color: #FFFFFF !important;
     }}
 
-    /* 9. TABLES - Body and header */
-    thead tr th {{ background-color: {CITY_NAVY} !important; color: white !important; }}
-    tbody td {{ color: #000000 !important; }}
+    /* 4. METRIC LABELS - Bright Sky Blue so they stand out */
+    div[data-testid="stMetricLabel"] p {{
+        color: {CITY_SKY_BLUE} !important;
+        font-weight: bold !important;
+        font-size: 1.1rem !important;
+    }}
+
+    /* 5. METRIC VALUES - Pure White */
+    div[data-testid="stMetricValue"] > div {{
+        color: #FFFFFF !important;
+    }}
+
+    /* 6. TABS - Make the selected tab Sky Blue */
+    button[data-baseweb="tab"] p {{
+        color: #BBBBBB !important; /* Unselected tabs slightly dimmed */
+    }}
+    button[data-baseweb="tab"][aria-selected="true"] p {{
+        color: {CITY_SKY_BLUE} !important; /* Selected tab is Sky Blue */
+        font-weight: bold !important;
+        font-size: 1.2rem !important;
+    }}
+
+    /* 7. SIDEBAR - Keep it distinct */
+    [data-testid="stSidebar"] {{
+        background-color: #121E3E !important; /* Slightly darker navy */
+        border-right: 1px solid {CITY_SKY_BLUE};
+    }}
+
+    /* 8. WIDGETS (Selectboxes, Uploaders) */
+    div[data-testid="stWidgetLabel"] p {{
+        color: {CITY_SKY_BLUE} !important;
+        font-weight: bold !important;
+    }}
+
+    /* 9. TABLES - Dark theme with Sky Blue headers */
+    thead tr th {{
+        background-color: {CITY_SKY_BLUE} !important;
+        color: {CITY_NAVY} !important; /* Navy text on Sky Blue header */
+    }}
+    tbody td {{
+        color: #FFFFFF !important;
+        background-color: #263868 !important; /* Slightly lighter navy for rows */
+    }}
 
     </style>
     """, unsafe_allow_html=True)
