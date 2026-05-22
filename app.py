@@ -1049,5 +1049,8 @@ if check_password():
                     st.success(f"✅ No injury records found for {sel_player}.")
             else:
                 st.warning("⚠️ No Injury/Illness data detected.")
-            else:
-                st.info("👋 Upload data to begin.")
+    
+    # --- THIS ELSE BELOW MUST BE AGAINST THE LEFT MARGIN ---
+    # It belongs to the very first "if master_data is not None" check.
+    else:
+        st.info("👋 Upload data to begin.")
