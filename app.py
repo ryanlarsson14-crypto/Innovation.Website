@@ -32,7 +32,7 @@ if check_password():
     CITY_SKY_BLUE, CITY_NAVY, CITY_WHITE = "#6CABDD", "#1C2C5B", "#FFFFFF"
     st.set_page_config(page_title="MCFC | MDT Intelligence Hub", layout="wide")
 
-   st.markdown(f"""
+    st.markdown(f"""
     <style>
     /* 1. Main Background */
     .stApp {{ background-color: {CITY_WHITE}; }}
