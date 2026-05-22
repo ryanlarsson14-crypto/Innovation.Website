@@ -31,7 +31,6 @@ def check_password():
 # 2. MAIN APP CONTENT
 # ==========================================
 if check_password():
-    %%writefile app.py
 import streamlit as st
 import pandas as pd
 import numpy as np
