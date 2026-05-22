@@ -6,38 +6,27 @@ import plotly.graph_objects as go
 from datetime import datetime, timedelta
 
 # ==========================================
-# 1. SECURITY SYSTEM
+# 1. SECURITY SYSTEM (No Indentation Required)
 # ==========================================
-def check_password():
-    if "authenticated" not in st.session_state:
-        st.session_state["authenticated"] = False
+if "authenticated" not in st.session_state:
+    st.session_state["authenticated"] = False
 
-    if not st.session_state["authenticated"]:
-        st.set_page_config(page_title="Secure Login", page_icon="🔒")
-        st.title("MDT Intelligence Hub | Secure Access")
-        
-        # You can change "1234" to your preferred code
-        password = st.text_input("Enter Access Code", type="password")
-        if st.button("Unlock Dashboard"):
-            if password == "1234": 
-                st.session_state["authenticated"] = True
-                st.rerun()
-            else:
-                st.error("❌ Incorrect code.")
-        return False
-    return True
-
+if not st.session_state["authenticated"]:
+    st.set_page_config(page_title="MCFC | Login", page_icon="💙")
+    st.title("Manchester City MDT | Secure Access")
+    
+    password = st.text_input("Enter Access Code", type="password")
+    if st.button("Unlock Dashboard"):
+        if password == "1234": # <--- Change your password here
+            st.session_state["authenticated"] = True
+            st.rerun()
+        else:
+            st.error("❌ Incorrect code.")
+    st.stop() # This stops the app here if not logged in
 # ==========================================
 # 2. MAIN APP CONTENT
-# ==========================================
-if check_password():
-import streamlit as st
-import pandas as pd
-import numpy as np
-import plotly.express as px
-import plotly.graph_objects as go
-from datetime import datetime, timedelta
-
+# =========================================
+    if check_password():
 # --- MAN CITY THEME CONFIG ---
 CITY_SKY_BLUE, CITY_NAVY, CITY_WHITE = "#6CABDD", "#1C2C5B", "#FFFFFF"
 st.set_page_config(page_title="MCFC | MDT Intelligence Hub", layout="wide")
