@@ -35,49 +35,58 @@ if check_password():
     st.markdown(f"""
     <style>
     /* 1. Main Background */
-    .stApp {{ background-color: {CITY_WHITE}; }}
+    .stApp {{ background-color: {CITY_WHITE} !important; }}
 
-    /* 2. Target standard text but avoid the colored "Deltas" */
-    /* This makes your main headers and labels black */
-    .main h1, .main h2, .main h3, .main h4, .main h5, .main h6, .main p {{
+    /* 2. UNIVERSAL BLACK TEXT - Targets almost everything in the main area */
+    /* This will force standard text, markdown, and labels to Black */
+    .main p, .main li, .main label, .main .stMarkdown p {{
+        color: #000000 !important;
+        -webkit-text-fill-color: #000000 !important;
+    }}
+
+    /* 3. WIDGET LABELS - These are the grey titles above Selectboxes/Uploaders */
+    div[data-testid="stWidgetLabel"] p {{
+        color: #000000 !important;
+        font-weight: 800 !important; /* Extra Bold */
+        font-size: 1rem !important;
+    }}
+
+    /* 4. METRIC LABELS - Specifically target the grey label above big numbers */
+    div[data-testid="stMetricLabel"] p {{
+        color: #000000 !important;
+        font-weight: 800 !important;
+        font-size: 1rem !important;
+    }}
+
+    /* 5. METRIC VALUES - The big numbers themselves */
+    div[data-testid="stMetricValue"] > div {{
         color: #000000 !important;
     }}
 
-    /* 3. Specifically fix Metric LABELS (making them black and bold) */
-    /* This will NOT change the color of the green/red arrows/numbers below them */
-    [data-testid="stMetricLabel"] p {{
+    /* 6. TABS - Make them deep black and bold */
+    button[data-baseweb="tab"] p {{
         color: #000000 !important;
-        font-weight: bold !important;
+        font-weight: 900 !important;
     }}
 
-    /* 4. Ensure Metric Values (the big numbers) are black */
-    [data-testid="stMetricValue"] div {{
-        color: #000000 !important;
-    }}
-
-    /* 5. TABS - Force black and bold */
-    button[data-baseweb="tab"] p {{ 
-        color: #000000 !important; 
-        font-weight: bold !important; 
-    }}
-
-    /* 6. SIDEBAR - Keep white text for visibility */
+    /* 7. SIDEBAR - Remain White on Navy */
     [data-testid="stSidebar"] p, 
     [data-testid="stSidebar"] label, 
-    [data-testid="stSidebar"] h1 {{ 
-        color: #FFFFFF !important; 
+    [data-testid="stSidebar"] h1, 
+    [data-testid="stSidebar"] span {{
+        color: #FFFFFF !important;
+        -webkit-text-fill-color: #FFFFFF !important;
     }}
 
-    /* 7. WIDGET LABELS (The text above uploaders and selectors) */
-    .stSelectbox label, .stFileUploader label {{
+    /* 8. HEADERS - Force solid black */
+    .main h1, .main h2, .main h3, .main h4 {{
         color: #000000 !important;
-        font-weight: bold !important;
     }}
 
-    /* 8. Table Headers and Body */
+    /* 9. TABLES - Body and header */
     thead tr th {{ background-color: {CITY_NAVY} !important; color: white !important; }}
     tbody td {{ color: #000000 !important; }}
-    
+
     </style>
     """, unsafe_allow_html=True)
 
