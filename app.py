@@ -6,23 +6,24 @@ import plotly.graph_objects as go
 from datetime import datetime, timedelta
 
 # ==========================================
-# 1. SECURITY SYSTEM (No Indentation Required)
+# 1. SECURITY SYSTEM FUNCTION
 # ==========================================
-if "authenticated" not in st.session_state:
-    st.session_state["authenticated"] = False
+def check_password():
+    if "authenticated" not in st.session_state:
+        st.session_state["authenticated"] = False
 
-if not st.session_state["authenticated"]:
-    st.set_page_config(page_title="MCFC | Login", page_icon="💙")
-    st.title("Manchester City MDT | Secure Access")
-    
-    password = st.text_input("Enter Access Code", type="password")
-    if st.button("Unlock Dashboard"):
-        if password == "1234": # <--- Change your password here
-            st.session_state["authenticated"] = True
-            st.rerun()
-        else:
-            st.error("❌ Incorrect code.")
-    st.stop() # This stops the app here if not logged in
+    if not st.session_state["authenticated"]:
+        st.set_page_config(page_title="MCFC | Login", page_icon="💙")
+        st.title("Manchester City MDT | Secure Access")
+        password = st.text_input("Enter Access Code", type="password")
+        if st.button("Unlock Dashboard"):
+            if password == "1234":  # <--- Change your password here
+                st.session_state["authenticated"] = True
+                st.rerun()
+            else:
+                st.error("❌ Incorrect code.")
+        return False
+    return True
 # ==========================================
 # 2. MAIN APP CONTENT
 # =========================================
