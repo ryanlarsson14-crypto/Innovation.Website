@@ -32,26 +32,52 @@ if check_password():
     CITY_SKY_BLUE, CITY_NAVY, CITY_WHITE = "#6CABDD", "#1C2C5B", "#FFFFFF"
     st.set_page_config(page_title="MCFC | MDT Intelligence Hub", layout="wide")
 
-    st.markdown(f"""
+   st.markdown(f"""
     <style>
-    /* Main Background */
+    /* 1. Main Background */
     .stApp {{ background-color: {CITY_WHITE}; }}
-    .main .stMarkdown p, .main .stMarkdown h1, .main .stMarkdown h2, .main .stMarkdown h3,
-    .main .stMarkdown h4, .main label, .main div, .main span {{ color: #000000 !important; }}
 
-    /* Tabs Styling - Removing Dark Backgrounds */
-    div[data-baseweb="tab-list"] {{ background-color: transparent !important; }}
-    button[data-baseweb="tab"] {{ background-color: transparent !important; border: none !important; }}
-    button[data-baseweb="tab"] p {{ color: #000000 !important; font-weight: bold !important; font-size: 16px !important; }}
-    div[data-testid="stTab"] {{ background-color: {CITY_WHITE} !important; }}
+    /* 2. Target standard text but avoid the colored "Deltas" */
+    /* This makes your main headers and labels black */
+    .main h1, .main h2, .main h3, .main h4, .main h5, .main h6, .main p {{
+        color: #000000 !important;
+    }}
 
-    /* Sidebar and Header remains unchanged */
-    [data-testid="stSidebar"] {{ background-color: {CITY_NAVY} !important; }}
-    [data-testid="stSidebar"] .stMarkdown p, [data-testid="stSidebar"] label {{ color: #FFFFFF !important; }}
-    [data-testid="stHeader"] {{ background-color: {CITY_SKY_BLUE}; }}
+    /* 3. Specifically fix Metric LABELS (making them black and bold) */
+    /* This will NOT change the color of the green/red arrows/numbers below them */
+    [data-testid="stMetricLabel"] p {{
+        color: #000000 !important;
+        font-weight: bold !important;
+    }}
+
+    /* 4. Ensure Metric Values (the big numbers) are black */
+    [data-testid="stMetricValue"] div {{
+        color: #000000 !important;
+    }}
+
+    /* 5. TABS - Force black and bold */
+    button[data-baseweb="tab"] p {{ 
+        color: #000000 !important; 
+        font-weight: bold !important; 
+    }}
+
+    /* 6. SIDEBAR - Keep white text for visibility */
+    [data-testid="stSidebar"] p, 
+    [data-testid="stSidebar"] label, 
+    [data-testid="stSidebar"] h1 {{ 
+        color: #FFFFFF !important; 
+    }}
+
+    /* 7. WIDGET LABELS (The text above uploaders and selectors) */
+    .stSelectbox label, .stFileUploader label {{
+        color: #000000 !important;
+        font-weight: bold !important;
+    }}
+
+    /* 8. Table Headers and Body */
     thead tr th {{ background-color: {CITY_NAVY} !important; color: white !important; }}
-
-    [data-testid="stMetricLabel"] p {{ font-size: 16px !important; overflow: visible !important; white-space: normal !important; }}
+    tbody td {{ color: #000000 !important; }}
+    
     </style>
     """, unsafe_allow_html=True)
 
