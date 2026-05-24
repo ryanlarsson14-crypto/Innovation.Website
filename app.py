@@ -17,7 +17,7 @@ def check_password():
         st.title("Manchester City MDT | Secure Access")
         password = st.text_input("Enter Access Code", type="password")
         if st.button("Unlock Dashboard"):
-            if password == "1234":  # <--- Change your password here
+            if password == "1234":  
                 st.session_state["authenticated"] = True
                 st.rerun()
             else:
@@ -29,77 +29,94 @@ def check_password():
 # =========================================
 if check_password():
 # --- MAN CITY THEME CONFIG ---
-    CITY_SKY_BLUE, CITY_NAVY, CITY_WHITE = "#6CABDD", "#1C2C5B", "#FFFFFF"
-    st.set_page_config(page_title="MCFC | MDT Intelligence Hub", layout="wide")
+ CITY_SKY_BLUE, CITY_NAVY, CITY_WHITE = "#6CABDD", "#1C2C5B", "#FFFFFF"
 
-    st.markdown(f"""
-    <style>
-    /* 1. FORCE DARK NAVY BACKGROUND (Man City Navy) */
+st.set_page_config(page_title="MCFC | MDT Intelligence Hub", layout="wide")
+
+st.markdown(f"""
+<style>
+    /* 1. FORCE DARK NAVY BACKGROUND */
     .stApp {{
         background-color: {CITY_NAVY} !important;
     }}
 
-    /* 2. FORCE BRIGHT WHITE TEXT FOR ALL MAIN CONTENT */
-    /* This removes the "grey" look and makes text crisp */
-    .main p, .main li, .main label, .main span, .main .stMarkdown p {{
-        color: #FFFFFF !important;
-        -webkit-text-fill-color: #FFFFFF !important;
+    /* 2. UNIVERSAL TEXT BRIGHTNESS */
+    /* Target paragraphs, lists, and labels but NOT spans inside tables */
+    .main p, .main li, .main label, .main .stMarkdown p {{
+        color: {CITY_WHITE} !important;
     }}
 
-    /* 3. HEADERS - Use Sky Blue for a professional City look */
+    /* 3. HEADERS */
     .main h1, .main h2, .main h3 {{
         color: {CITY_SKY_BLUE} !important;
     }}
     .main h4, .main h5, .main h6 {{
-        color: #FFFFFF !important;
+        color: {CITY_WHITE} !important;
     }}
 
-    /* 4. METRIC LABELS - Bright Sky Blue so they stand out */
+    /* 4. METRICS - Labels sky blue, values white */
     div[data-testid="stMetricLabel"] p {{
         color: {CITY_SKY_BLUE} !important;
-        font-weight: bold !important;
-        font-size: 1.1rem !important;
+        font-weight: 600 !important;
     }}
-
-    /* 5. METRIC VALUES - Pure White */
     div[data-testid="stMetricValue"] > div {{
-        color: #FFFFFF !important;
+        color: {CITY_WHITE} !important;
     }}
+    /* Note: We do NOT touch stMetricDelta so your green/red remains visible */
 
-    /* 6. TABS - Make the selected tab Sky Blue */
+    /* 5. TABS - Fix the "Grey" unselected tab text */
     button[data-baseweb="tab"] p {{
-        color: #BBBBBB !important; /* Unselected tabs slightly dimmed */
+        color: rgba(255, 255, 255, 0.7) !important; /* Soft white instead of grey */
     }}
     button[data-baseweb="tab"][aria-selected="true"] p {{
-        color: {CITY_SKY_BLUE} !important; /* Selected tab is Sky Blue */
-        font-weight: bold !important;
-        font-size: 1.2rem !important;
-    }}
-
-    /* 7. SIDEBAR - Keep it distinct */
-    [data-testid="stSidebar"] {{
-        background-color: #121E3E !important; /* Slightly darker navy */
-        border-right: 1px solid {CITY_SKY_BLUE};
-    }}
-
-    /* 8. WIDGETS (Selectboxes, Uploaders) */
-    div[data-testid="stWidgetLabel"] p {{
         color: {CITY_SKY_BLUE} !important;
         font-weight: bold !important;
     }}
 
-    /* 9. TABLES - Dark theme with Sky Blue headers */
-    thead tr th {{
-        background-color: {CITY_SKY_BLUE} !important;
-        color: {CITY_NAVY} !important; /* Navy text on Sky Blue header */
+    /* 6. SIDEBAR - Improve contrast */
+    [data-testid="stSidebar"] {{
+        background-color: #121E3E !important;
+        border-right: 1px solid {CITY_SKY_BLUE};
     }}
-    tbody td {{
-        color: #FFFFFF !important;
-        background-color: #263868 !important; /* Slightly lighter navy for rows */
+    [data-testid="stSidebar"] .stMarkdown p {{
+        color: {CITY_WHITE} !important;
     }}
 
-    </style>
-    """, unsafe_allow_html=True)
+    /* 7. WIDGET LABELS (Selectboxes, Sliders, etc.) */
+    div[data-testid="stWidgetLabel"] p {{
+        color: {CITY_WHITE} !important; 
+        font-weight: 500 !important;
+    }}
+
+    /* 8. TABLES - PRESERVING CONDITIONAL FORMATTING */
+    /* We style the header, but for the body, we don't use !important on color */
+    thead tr th {{
+        background-color: {CITY_SKY_BLUE} !important;
+        color: {CITY_NAVY} !important;
+    }}
+    
+    /* This sets the default table text to white, but allows 
+       your Python conditional formatting to override it */
+    tbody td {{
+        background-color: #263868 !important;
+        color: {CITY_WHITE}; 
+    }}
+
+    /* 9. CAPTIONS & SMALL TEXT */
+    /* Streamlit often greys out 'st.caption' or small helper text */
+    .stCaption, .stMarkdown small {{
+        color: {CITY_WHITE} !important;
+        opacity: 0.9;
+    }}
+
+    /* 10. EXPANDERS */
+    .streamlit-expanderHeader {{
+        color: {CITY_WHITE} !important;
+        background-color: #263868 !important;
+    }}
+
+</style>
+""", unsafe_allow_html=True)
 
     def robust_clean(df):
         df.columns = df.columns.str.strip().str.upper()
