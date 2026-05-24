@@ -118,7 +118,7 @@ st.markdown(f"""
 </style>
 """, unsafe_allow_html=True)
 
-    def robust_clean(df):
+        def robust_clean(df):
         df.columns = df.columns.str.strip().str.upper()
         # Remove duplicate columns
         df = df.loc[:, ~df.columns.duplicated()]
