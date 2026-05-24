@@ -36,86 +36,60 @@ if check_password():
 
     st.markdown(f"""
     <style>
-    /* 1. THE ROOT FIX - Changes the "master" color for the whole app */
-    :root {{
-        --text-color: #FFFFFF !important;
-        --secondary-text-color: #FFFFFF !important;
-        --primary-color: {CITY_SKY_BLUE} !important;
+    /* 1. UNIVERSAL FORCE - Every single piece of text becomes White */
+    /* This targets the 'hidden' Streamlit classes that are making your text grey */
+    html, body, [data-testid="stAppViewContainer"] * {{
+        color: #FFFFFF !important;
+        -webkit-text-fill-color: #FFFFFF !important;
+        opacity: 1 !important;
     }}
 
-    /* 2. FORCE DARK NAVY BACKGROUND */
+    /* 2. THE BACKGROUND */
     .stApp {{
         background-color: {CITY_NAVY} !important;
     }}
 
-    /* 3. BROAD-SPECTRUM WHITE FORCE (Targets almost all text containers) */
-    /* We target paragraphs, labels, and generic spans but leave data-cells slightly more open */
-    .main p, .main li, .main label, .main div, .main small, .stCaption {{
-        color: #FFFFFF !important;
-        opacity: 1 !important;
-        -webkit-text-fill-color: #FFFFFF !important;
+    /* 3. THE EXCEPTION - This is the most important part */
+    /* We 'release' the force from table cells so your conditional formatting (Red/Green) works */
+    /* If you are using st.dataframe or st.table, this allows Python to take control back */
+    td, td span, th, [data-testid="stTable"] td, .stDataFrame div {{
+        color: inherit !important;
+        -webkit-text-fill-color: inherit !important;
     }}
 
-    /* 4. HEADERS - Keeping your City Sky Blue for headers */
-    .main h1, .main h2, .main h3 {{
+    /* 4. HEADERS - Re-applying Sky Blue (since Rule 1 turned them white) */
+    h1, h2, h3, [data-testid="stMetricLabel"] p {{
         color: {CITY_SKY_BLUE} !important;
         -webkit-text-fill-color: {CITY_SKY_BLUE} !important;
     }}
 
-    /* 5. METRICS - Labels sky blue, values white */
-    div[data-testid="stMetricLabel"] p {{
-        color: {CITY_SKY_BLUE} !important;
-        font-weight: 600 !important;
-    }}
-    div[data-testid="stMetricValue"] > div {{
-        color: #FFFFFF !important;
+    /* 5. SIDEBAR FIX */
+    [data-testid="stSidebar"] {{
+        background-color: #121E3E !important;
+        border-right: 1px solid {CITY_SKY_BLUE};
     }}
 
-    /* 6. TABS - Selected Sky Blue, Unselected White */
-    button[data-baseweb="tab"] p {{
-        color: #FFFFFF !important;
-        opacity: 0.7 !important;
-    }}
-    button[data-baseweb="tab"][aria-selected="true"] p {{
-        color: {CITY_SKY_BLUE} !important;
-        opacity: 1 !important;
-        font-weight: bold !important;
-    }}
-
-    /* 7. SIDEBAR - Force everything white */
-    [data-testid="stSidebar"] * {{
-        color: #FFFFFF !important;
-    }}
-
-    /* 8. THE LOOPHOLE FOR CONDITIONAL FORMATTING */
-    /* We set the background for tables, but we DO NOT use !important on the color.
-       This allows your Python .style.applymap() colors to override this white. */
+    /* 6. TABLE BACKGROUNDS */
     thead tr th {{
         background-color: {CITY_SKY_BLUE} !important;
         color: {CITY_NAVY} !important;
+        -webkit-text-fill-color: {CITY_NAVY} !important;
     }}
     tbody td {{
         background-color: #263868 !important;
-        color: #FFFFFF; /* No !important here so your red/green logic can work */
-    }}
-    
-    /* Also protecting Metric Deltas (the green/red arrows) */
-    div[data-testid="stMetricDelta"] > div {{
-        color: inherit !important;
     }}
 
-    /* 9. EXPANDERS */
-    .streamlit-expanderHeader {{
+    /* 7. TABS - Selected Sky Blue, Unselected White */
+    button[data-baseweb="tab"][aria-selected="true"] p {{
+        color: {CITY_SKY_BLUE} !important;
+        -webkit-text-fill-color: {CITY_SKY_BLUE} !important;
+    }}
+    
+    /* 8. METRIC VALUES - Explicitly White */
+    [data-testid="stMetricValue"] > div {{
         color: #FFFFFF !important;
-        background-color: #263868 !important;
     }}
 
-    /* 10. PLOTLY CHART TEXT FIX */
-    /* Sometimes charts get grey text, this helps force visibility */
-    .js-plotly-plot .main-svg {{
-        background: transparent !important;
-    }}
-    
     </style>
     """, unsafe_allow_html=True)
 
