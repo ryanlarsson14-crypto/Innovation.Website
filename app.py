@@ -36,42 +36,54 @@ if check_password():
 
     st.markdown(f"""
     <style>
-        /* 1. FORCE DARK NAVY BACKGROUND */
-        .stApp {{ background-color: {CITY_NAVY} !important; }}
+        /* 1. THE "NUCLEAR" FIX - Overriding Streamlit's internal color variables */
+        :root {{
+            --text-color: {CITY_WHITE} !important;
+            --secondary-text-color: {CITY_WHITE} !important;
+        }}
 
-        /* 2. UNIVERSAL TEXT BRIGHTNESS */
-        .main p, .main li, .main label, .main div[data-testid="stMarkdownContainer"] p, .main .stMarkdown p {{
+        /* 2. FORCE DARK NAVY BACKGROUND */
+        .stApp {{ 
+            background-color: {CITY_NAVY} !important; 
+        }}
+
+        /* 3. TARGETING THE STUBBORN GREY TEXT (Markdown & Captions) */
+        /* This fixes the "Calculation" and "Context" text specifically */
+        .main [data-testid="stMarkdownContainer"] p, 
+        .main [data-testid="stMarkdownContainer"] span,
+        .main div p,
+        .stCaption {{
             color: {CITY_WHITE} !important;
+            -webkit-text-fill-color: {CITY_WHITE} !important;
             opacity: 1 !important;
         }}
 
-        /* 3. HEADERS */
+        /* 4. HEADERS */
         .main h1, .main h2, .main h3 {{ color: {CITY_SKY_BLUE} !important; }}
         .main h4, .main h5, .main h6 {{ color: {CITY_WHITE} !important; }}
 
-        /* 4. METRICS */
+        /* 5. METRICS */
         div[data-testid="stMetricLabel"] p {{ color: {CITY_SKY_BLUE} !important; font-weight: 600 !important; }}
         div[data-testid="stMetricValue"] > div {{ color: {CITY_WHITE} !important; }}
 
-        /* 5. TABS */
+        /* 6. TABS */
         button[data-baseweb="tab"] p {{ color: rgba(255, 255, 255, 0.7) !important; }}
         button[data-baseweb="tab"][aria-selected="true"] p {{ color: {CITY_SKY_BLUE} !important; font-weight: bold !important; }}
 
-        /* 6. SIDEBAR */
+        /* 7. SIDEBAR */
         [data-testid="stSidebar"] {{ background-color: #121E3E !important; border-right: 1px solid {CITY_SKY_BLUE}; }}
-        [data-testid="stSidebar"] .stMarkdown p {{ color: {CITY_WHITE} !important; }}
+        [data-testid="stSidebar"] * {{ color: {CITY_WHITE} !important; }}
 
-        /* 7. WIDGET LABELS */
-        div[data-testid="stWidgetLabel"] p {{ color: {CITY_WHITE} !important; font-weight: 500 !important; }}
+        /* 8. WIDGET LABELS */
+        div[data-testid="stWidgetLabel"] p {{ color: {CITY_WHITE} !important; }}
 
-        /* 8. TABLES */
+        /* 9. TABLES - PRESERVING YOUR CONDITIONAL FORMATTING */
+        /* We set the background and header, but leave 'color' without !important 
+           so your Python formatting is not overwritten */
         thead tr th {{ background-color: {CITY_SKY_BLUE} !important; color: {CITY_NAVY} !important; }}
-        tbody td {{ background-color: #263868 !important; color: {CITY_WHITE}; }}
-
-        /* 9. CAPTIONS & SECONDARY TEXT (Calculation/Context) */
-        .stCaption, .stMarkdown small, .main .stMarkdown div p {{
-            color: {CITY_WHITE} !important;
-            opacity: 0.9 !important;
+        tbody td {{ 
+            background-color: #263868 !important; 
+            color: {CITY_WHITE}; 
         }}
 
         /* 10. EXPANDERS */
