@@ -36,57 +36,76 @@ if check_password():
 
     st.markdown(f"""
     <style>
-    /* 1. UNIVERSAL FORCE - Every single piece of text becomes White */
-    /* This targets the 'hidden' Streamlit classes that are making your text grey */
-    html, body, [data-testid="stAppViewContainer"] * {{
+    /* 1. APP BACKGROUND */
+    .stApp {{
+        background-color: {CITY_NAVY} !important;
+    }}
+
+    /* 2. FORCE STUBBORN TEXT TO WHITE */
+    /* Targets paragraphs, list items, labels, and small text */
+    /* We use !important to override Streamlit's grey-scale variables */
+    .main p, .main li, .main label, .main span, .stCaption, .stMarkdown small, 
+    div[data-testid="stMarkdownContainer"] p {{
         color: #FFFFFF !important;
         -webkit-text-fill-color: #FFFFFF !important;
         opacity: 1 !important;
     }}
 
-    /* 2. THE BACKGROUND */
-    .stApp {{
-        background-color: {CITY_NAVY} !important;
+    /* 3. FIX THE "WHITE BOX" (st.info / st.success / st.warning) */
+    /* This makes your Chart Interpretation box dark navy with a sky blue border */
+    div[data-testid="stNotification"] {{
+        background-color: #121E3E !important;
+        color: #FFFFFF !important;
+        border: 1px solid {CITY_SKY_BLUE} !important;
+    }}
+    div[data-testid="stNotification"] p {{
+        color: #FFFFFF !important;
     }}
 
-    /* 3. THE EXCEPTION - This is the most important part */
-    /* We 'release' the force from table cells so your conditional formatting (Red/Green) works */
-    /* If you are using st.dataframe or st.table, this allows Python to take control back */
-    td, td span, th, [data-testid="stTable"] td, .stDataFrame div {{
-        color: inherit !important;
-        -webkit-text-fill-color: inherit !important;
-    }}
-
-    /* 4. HEADERS - Re-applying Sky Blue (since Rule 1 turned them white) */
-    h1, h2, h3, [data-testid="stMetricLabel"] p {{
+    /* 4. HEADERS & METRIC LABELS (The Sky Blue elements) */
+    .main h1, .main h2, .main h3, 
+    div[data-testid="stMetricLabel"] p {{
         color: {CITY_SKY_BLUE} !important;
         -webkit-text-fill-color: {CITY_SKY_BLUE} !important;
+        font-weight: 600 !important;
     }}
 
-    /* 5. SIDEBAR FIX */
+    /* 5. METRIC VALUES */
+    div[data-testid="stMetricValue"] > div {{
+        color: #FFFFFF !important;
+        -webkit-text-fill-color: #FFFFFF !important;
+    }}
+
+    /* 6. TABS */
+    button[data-baseweb="tab"] p {{
+        color: rgba(255, 255, 255, 0.7) !important;
+    }}
+    button[data-baseweb="tab"][aria-selected="true"] p {{
+        color: {CITY_SKY_BLUE} !important;
+        font-weight: bold !important;
+    }}
+
+    /* 7. SIDEBAR */
     [data-testid="stSidebar"] {{
         background-color: #121E3E !important;
         border-right: 1px solid {CITY_SKY_BLUE};
     }}
 
-    /* 6. TABLE BACKGROUNDS */
+    /* 8. TABLES - PRESERVE CONDITIONAL FORMATTING */
+    /* We style the headers and background, but we DO NOT use !important on cell text color.
+       This allows your Python red/green logic to override the default white. */
     thead tr th {{
         background-color: {CITY_SKY_BLUE} !important;
         color: {CITY_NAVY} !important;
         -webkit-text-fill-color: {CITY_NAVY} !important;
     }}
-    tbody td {{
+    tbody td, tbody td span {{
         background-color: #263868 !important;
+        color: #FFFFFF; /* No !important here */
     }}
 
-    /* 7. TABS - Selected Sky Blue, Unselected White */
-    button[data-baseweb="tab"][aria-selected="true"] p {{
-        color: {CITY_SKY_BLUE} !important;
-        -webkit-text-fill-color: {CITY_SKY_BLUE} !important;
-    }}
-    
-    /* 8. METRIC VALUES - Explicitly White */
-    [data-testid="stMetricValue"] > div {{
+    /* 9. WIDGETS (Selectboxes, etc) */
+    div[data-testid="stWidgetLabel"] p {{
         color: #FFFFFF !important;
     }}
 
