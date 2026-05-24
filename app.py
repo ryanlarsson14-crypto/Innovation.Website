@@ -36,58 +36,86 @@ if check_password():
 
     st.markdown(f"""
     <style>
-        /* 1. THE "NUCLEAR" FIX - Overriding Streamlit's internal color variables */
-        :root {{
-            --text-color: {CITY_WHITE} !important;
-            --secondary-text-color: {CITY_WHITE} !important;
-        }}
+    /* 1. THE ROOT FIX - Changes the "master" color for the whole app */
+    :root {{
+        --text-color: #FFFFFF !important;
+        --secondary-text-color: #FFFFFF !important;
+        --primary-color: {CITY_SKY_BLUE} !important;
+    }}
 
-        /* 2. FORCE DARK NAVY BACKGROUND */
-        .stApp {{ 
-            background-color: {CITY_NAVY} !important; 
-        }}
+    /* 2. FORCE DARK NAVY BACKGROUND */
+    .stApp {{
+        background-color: {CITY_NAVY} !important;
+    }}
 
-        /* 3. TARGETING THE STUBBORN GREY TEXT (Markdown & Captions) */
-        /* This fixes the "Calculation" and "Context" text specifically */
-        .main [data-testid="stMarkdownContainer"] p, 
-        .main [data-testid="stMarkdownContainer"] span,
-        .main div p,
-        .stCaption {{
-            color: {CITY_WHITE} !important;
-            -webkit-text-fill-color: {CITY_WHITE} !important;
-            opacity: 1 !important;
-        }}
+    /* 3. BROAD-SPECTRUM WHITE FORCE (Targets almost all text containers) */
+    /* We target paragraphs, labels, and generic spans but leave data-cells slightly more open */
+    .main p, .main li, .main label, .main div, .main small, .stCaption {{
+        color: #FFFFFF !important;
+        opacity: 1 !important;
+        -webkit-text-fill-color: #FFFFFF !important;
+    }}
 
-        /* 4. HEADERS */
-        .main h1, .main h2, .main h3 {{ color: {CITY_SKY_BLUE} !important; }}
-        .main h4, .main h5, .main h6 {{ color: {CITY_WHITE} !important; }}
+    /* 4. HEADERS - Keeping your City Sky Blue for headers */
+    .main h1, .main h2, .main h3 {{
+        color: {CITY_SKY_BLUE} !important;
+        -webkit-text-fill-color: {CITY_SKY_BLUE} !important;
+    }}
 
-        /* 5. METRICS */
-        div[data-testid="stMetricLabel"] p {{ color: {CITY_SKY_BLUE} !important; font-weight: 600 !important; }}
-        div[data-testid="stMetricValue"] > div {{ color: {CITY_WHITE} !important; }}
+    /* 5. METRICS - Labels sky blue, values white */
+    div[data-testid="stMetricLabel"] p {{
+        color: {CITY_SKY_BLUE} !important;
+        font-weight: 600 !important;
+    }}
+    div[data-testid="stMetricValue"] > div {{
+        color: #FFFFFF !important;
+    }}
 
-        /* 6. TABS */
-        button[data-baseweb="tab"] p {{ color: rgba(255, 255, 255, 0.7) !important; }}
-        button[data-baseweb="tab"][aria-selected="true"] p {{ color: {CITY_SKY_BLUE} !important; font-weight: bold !important; }}
+    /* 6. TABS - Selected Sky Blue, Unselected White */
+    button[data-baseweb="tab"] p {{
+        color: #FFFFFF !important;
+        opacity: 0.7 !important;
+    }}
+    button[data-baseweb="tab"][aria-selected="true"] p {{
+        color: {CITY_SKY_BLUE} !important;
+        opacity: 1 !important;
+        font-weight: bold !important;
+    }}
 
-        /* 7. SIDEBAR */
-        [data-testid="stSidebar"] {{ background-color: #121E3E !important; border-right: 1px solid {CITY_SKY_BLUE}; }}
-        [data-testid="stSidebar"] * {{ color: {CITY_WHITE} !important; }}
+    /* 7. SIDEBAR - Force everything white */
+    [data-testid="stSidebar"] * {{
+        color: #FFFFFF !important;
+    }}
 
-        /* 8. WIDGET LABELS */
-        div[data-testid="stWidgetLabel"] p {{ color: {CITY_WHITE} !important; }}
+    /* 8. THE LOOPHOLE FOR CONDITIONAL FORMATTING */
+    /* We set the background for tables, but we DO NOT use !important on the color.
+       This allows your Python .style.applymap() colors to override this white. */
+    thead tr th {{
+        background-color: {CITY_SKY_BLUE} !important;
+        color: {CITY_NAVY} !important;
+    }}
+    tbody td {{
+        background-color: #263868 !important;
+        color: #FFFFFF; /* No !important here so your red/green logic can work */
+    }}
+    
+    /* Also protecting Metric Deltas (the green/red arrows) */
+    div[data-testid="stMetricDelta"] > div {{
+        color: inherit !important;
+    }}
 
-        /* 9. TABLES - PRESERVING YOUR CONDITIONAL FORMATTING */
-        /* We set the background and header, but leave 'color' without !important 
-           so your Python formatting is not overwritten */
-        thead tr th {{ background-color: {CITY_SKY_BLUE} !important; color: {CITY_NAVY} !important; }}
-        tbody td {{ 
-            background-color: #263868 !important; 
-            color: {CITY_WHITE}; 
-        }}
+    /* 9. EXPANDERS */
+    .streamlit-expanderHeader {{
+        color: #FFFFFF !important;
+        background-color: #263868 !important;
+    }}
 
-        /* 10. EXPANDERS */
-        .streamlit-expanderHeader {{ color: {CITY_WHITE} !important; background-color: #263868 !important; }}
+    /* 10. PLOTLY CHART TEXT FIX */
+    /* Sometimes charts get grey text, this helps force visibility */
+    .js-plotly-plot .main-svg {{
+        background: transparent !important;
+    }}
+    
     </style>
     """, unsafe_allow_html=True)
 
