@@ -891,7 +891,7 @@ if check_password():
                     fig_radar = go.Figure()
                     fig_radar.add_trace(go.Scatterpolar(r=base_v + [base_v[0]], theta=categories + [categories[0]], fill='toself', name='<b>28-Session Baseline</b>', line_color='purple', fillcolor='rgba(128, 0, 128, 0.1)', hovertemplate="Avg Baseline: %{r:.0f}kg<extra></extra>"))
                     fig_radar.add_trace(go.Scatterpolar(r=ath_v + [ath_v[0]], theta=categories + [categories[0]], fill='toself', name='<b>Most Recent Session</b>', line_color='green', fillcolor='rgba(46, 204, 113, 0.4)', hovertemplate="Recent Session: %{r:.0f}kg<extra></extra>"))
-                    fig_radar.update_layout(polar=dict(radialaxis=dict(visible=True, showticklabels=False), angularaxis=dict(tickfont=dict(color='black', size=12, family='Arial Black'))), legend=dict(font=dict(color='black', size=12, family='Arial Black')), showlegend=True, height=450, margin=dict(l=80, r=80, t=20, b=20), paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)')
+                    fig_radar.update_layout(polar=dict(radialaxis=dict(visible=True, showticklabels=False), angularaxis=dict(tickfont=dict(color='white', size=12, family='Arial Black'))), legend=dict(font=dict(color='white', size=12, family='Arial Black')), showlegend=True, height=450, margin=dict(l=80, r=80, t=20, b=20), paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)')
                     st.plotly_chart(fig_radar, use_container_width=True)
 
                     # --- RADAR CHART INTERPRETATION ---
