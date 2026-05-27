@@ -737,9 +737,9 @@ if check_password():
                     ))
                     fig_g.update_layout(height=230, margin=dict(l=40, r=60, t=40, b=20), paper_bgcolor='rgba(0,0,0,0)')
                     st.plotly_chart(fig_g, use_container_width=True)
-                    st.markdown(f"<p style='font-size: 0.85em; color: #444;'><strong>Context:</strong> This gauge reflects their <strong>Latest Session Max Speed</strong> ({cur_sp} km/h) relative to their <strong>All-Time PB</strong> ({pb_sp} km/h). Maintaining >90% indicates high neurological freshness.</p>", unsafe_allow_html=True)
+                    st.markdown(f"<p style='font-size: 0.85em; color: white;'><strong>Context:</strong> This gauge reflects their <strong>Latest Session Max Speed</strong> ({cur_sp} km/h) relative to their <strong>All-Time PB</strong> ({pb_sp} km/h). Maintaining >90% indicates high neurological freshness.</p>", unsafe_allow_html=True)
                 with cl2:
-                    st.markdown("<h5 style='color:black;'>Mechanical Efficiency</h5>", unsafe_allow_html=True)
+                    st.markdown("<h5 style='color:white;'>Mechanical Efficiency</h5>", unsafe_allow_html=True)
                     mmin = latest.get('TOTAL DISTANCE/MIN (M/MIN)', 0)
                     if mmin == 0: mmin = (latest['TOTAL DISTANCE (M)'] / 90)
                     eff_well = (float(latest.get('SORENESS', 5)) + float(latest.get('FATIGUE', 5))) / 2
@@ -747,7 +747,7 @@ if check_password():
                     st.metric("Efficiency Index", f"{eff:.2f}")
                     if eff >= 15: st.success("✅ **Scores in Desired Range**")
                     else: st.error("❌ **Scores Below Desired Range**")
-                    st.markdown(f"<p style='font-size: 0.85em; color: #444;'><strong>Context:</strong> Movement output (m/min) relative to internal cost. <strong>{p_unit}s</strong> typically aim for >15.0.</p>", unsafe_allow_html=True)
+                    st.markdown(f"<p style='font-size: 0.85em; color: white;'><strong>Context:</strong> Movement output (m/min) relative to internal cost. <strong>{p_unit}s</strong> typically aim for >15.0.</p>", unsafe_allow_html=True)
 
                 # --- PERFORMANCE VERDICT (Updated with Recommendations) ---
                 st.subheader("🎯 The Performance Verdict")
@@ -919,19 +919,19 @@ if check_password():
                         cur_eff = latest_gym['VOLUME'] / (latest_gym['RPE'] * latest_gym['SETS']) if (latest_gym['RPE'] > 0 and latest_gym['SETS'] > 0) else 0
                         max_eff_val = (sc_all['VOLUME'] / (sc_all['RPE'] * sc_all['SETS'])).tail(90).max()
                         eff_pct = min(100, (cur_eff / max_eff_val * 100)) if max_eff_val > 0 else 0
-                        fig_eff = go.Figure(go.Indicator(mode = "gauge+number", value = eff_pct, number = {'suffix': "%", 'font': {'color': 'black'}}, title = {'text': f"<span style='color:black; font-weight:bold;'>Strength Efficiency Index</span>"}, gauge = {'axis': {'range': [0, 100], 'tickfont': {'color': 'black'}, 'dtick': 20}, 'bar': {'color': "#2ecc71" if eff_pct >= 85 else "#ffa500"}, 'threshold': {'line': {'color': "green", 'width': 4}, 'thickness': 0.75, 'value': 85}, 'bgcolor': "rgba(0,0,0,0)"}))
+                        fig_eff = go.Figure(go.Indicator(mode = "gauge+number", value = eff_pct, number = {'suffix': "%", 'font': {'color': 'white'}}, title = {'text': f"<span style='color:white; font-weight:bold;'>Strength Efficiency Index</span>"}, gauge = {'axis': {'range': [0, 100], 'tickfont': {'color': 'white'}, 'dtick': 20}, 'bar': {'color': "#2ecc71" if eff_pct >= 85 else "#ffa500"}, 'threshold': {'line': {'color': "green", 'width': 4}, 'thickness': 0.75, 'value': 85}, 'bgcolor': "rgba(0,0,0,0)"}))
                         fig_eff.update_layout(height=230, margin=dict(l=40, r=60, t=40, b=20), paper_bgcolor='rgba(0,0,0,0)')
                         st.plotly_chart(fig_eff, use_container_width=True)
-                        st.markdown(f"<p style='font-size: 0.85em; color: #444;'><strong>Calculation:</strong> Total Volume / (Session RPE × Total Sets).<br><strong>Context:</strong> Measures the 'Neurological Price' paid for gym work. A high score (target <strong>>85%</strong>) indicates the athlete is hitting their numbers with high movement quality and low relative strain, preventing 'gym-burnout' from leaking into match-day performance.</p>", unsafe_allow_html=True)
+                        st.markdown(f"<p style='font-size: 0.85em; color: white;'><strong>Calculation:</strong> Total Volume / (Session RPE × Total Sets).<br><strong>Context:</strong> Measures the 'Neurological Price' paid for gym work. A high score (target <strong>>85%</strong>) indicates the athlete is hitting their numbers with high movement quality and low relative strain, preventing 'gym-burnout' from leaking into match-day performance.</p>", unsafe_allow_html=True)
                     with g_col2:
-                        st.markdown("<h5 style='color:black; font-weight:bold;'>Intensity Density</h5>", unsafe_allow_html=True)
+                        st.markdown("<h5 style='color:white; font-weight:bold;'>Intensity Density</h5>", unsafe_allow_html=True)
                         st.metric("Avg Weight per Rep", f"{i_dens:.1f} kg/rep")
                         if i_dens >= avg_28_dens: st.success("✅ **Intensity above 28-day average**")
                         else: st.warning("⚠️ **Intensity below 28-day average**")
-                        st.markdown(f"<p style='font-size: 0.85em; color: #444;'><strong>Calculation:</strong> Total Session Volume / Total Session Reps.<br><strong>Context:</strong> Tracks <strong>Strength Quality</strong>. **{p_unit}s** aim for high intensity relative to their historical average. Maintaining density above your 28-day average ensures you are moving effective loads rather than accumulating 'empty volume' reps that cause fatigue without performance gains.</p>", unsafe_allow_html=True)
+                        st.markdown(f"<p style='font-size: 0.85em; color: white;'><strong>Calculation:</strong> Total Session Volume / Total Session Reps.<br><strong>Context:</strong> Tracks <strong>Strength Quality</strong>. **{p_unit}s** aim for high intensity relative to their historical average. Maintaining density above your 28-day average ensures you are moving effective loads rather than accumulating 'empty volume' reps that cause fatigue without performance gains.</p>", unsafe_allow_html=True)
 
                     # --- 8. THE PERFORMANCE VERDICT (Integrated Logic) ---
-                    st.subheader("🎯 The Performance Verdict")
+                    st.markdown("<h3 style='color:white;'>🎯 The Performance Verdict</h3>", unsafe_allow_html=True)
                     sc_reasons = []
                     if a_fat_sc > 5.5: sc_reasons.append(f"accumulated fatigue ({a_fat_sc:.1f}/10)")
                     if a_sore_sc > 5.5: sc_reasons.append(f"muscle soreness ({a_sore_sc:.1f}/10)")
