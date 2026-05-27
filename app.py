@@ -728,9 +728,9 @@ if check_password():
                     cur_sp = latest.get('MAX SPEED (KM/H)', 0); pb_sp = p_history['MAX SPEED (KM/H)'].max()
                     sp_pct = min(100, (cur_sp / pb_sp * 100)) if pb_sp > 0 else 0
                     fig_g = go.Figure(go.Indicator(
-                        mode = "gauge+number", value = sp_pct, number = {'suffix': "%", 'font': {'color': 'black'}},
-                        title = {'text': f"<span style='color:black; font-weight:bold;'>Speed PB Capture</span>"},
-                        gauge = {'axis': {'range': [0, 100], 'tickfont': {'color': 'black'}, 'tickmode': 'linear', 'tick0': 0, 'dtick': 20},
+                        mode = "gauge+number", value = sp_pct, number = {'suffix': "%", 'font': {'color': 'white'}},
+                        title = {'text': f"<span style='color:white; font-weight:bold;'>Speed PB Capture</span>"},
+                        gauge = {'axis': {'range': [0, 100], 'tickfont': {'color': 'white'}, 'tickmode': 'linear', 'tick0': 0, 'dtick': 20},
                                 'bar': {'color': "#2ecc71" if sp_pct >= 90 else "#ffa500"},
                                 'threshold': {'line': {'color': "green", 'width': 4}, 'thickness': 0.75, 'value': 90},
                                 'bgcolor': "rgba(0,0,0,0)"}
