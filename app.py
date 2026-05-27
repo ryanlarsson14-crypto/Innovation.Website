@@ -901,9 +901,9 @@ if check_password():
                     peak_group = categories[np.argmax(ath_v)]
 
                     st.markdown(f"""
-                    <div style="background-color: #f8f9fa; padding: 15px; border-radius: 10px; border-left: 5px solid {CITY_SKY_BLUE}; margin-bottom: 20px;">
-                        <p style='margin: 0; color: black; font-size: 1.0em;'>
-                            <strong>Chart Interpretation:</strong> The radar shows a <strong>{v_diff_pct:+.1f}%</strong>
+                    <div style="background-color: #121E3E; padding: 15px; border-radius: 10px; border-left: 5px solid {CITY_SKY_BLUE}; margin-bottom: 20px;">
+                        <p style='margin: 0; color: white; font-size: 1.0em;'>
+                            <strong style="color: {CITY_SKY_BLUE};">Chart Interpretation:</strong> The radar shows a <strong>{v_diff_pct:+.1f}%</strong>
                             overall change in total volume compared to the 28-session baseline, with the largest
                             mechanical load currently focused on the <strong>{peak_group}</strong>.
                             {"This spike in specific muscle group volume correlates with the current elevation in fatigue/soreness markers, suggesting high physiological cost." if (a_fat_sc > 6 or a_sore_sc > 6) else "Despite the distribution shifts, wellness markers remain stable, indicating the athlete is coping well with this specific load profile."}
