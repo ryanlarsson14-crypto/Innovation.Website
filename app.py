@@ -41,28 +41,34 @@ if check_password():
         background-color: {CITY_NAVY} !important;
     }}
 
-    /* 2. FORCE STUBBORN TEXT TO WHITE */
-    /* Targets paragraphs, list items, labels, and small text */
-    /* We use !important to override Streamlit's grey-scale variables */
+    /* 2. GLOBAL TEXT FORCE */
+    /* We target the root text containers to ensure legibility on the navy background */
     .main p, .main li, .main label, .main span, .stCaption, .stMarkdown small, 
     div[data-testid="stMarkdownContainer"] p {{
         color: #FFFFFF !important;
         -webkit-text-fill-color: #FFFFFF !important;
-        opacity: 1 !important;
     }}
 
-    /* 3. FIX THE "WHITE BOX" (st.info / st.success / st.warning) */
-    /* This makes your Chart Interpretation box dark navy with a sky blue border */
-    div[data-testid="stNotification"] {{
-        background-color: #121E3E !important;
+    /* 3. FIX THE "WHITE BOX" (st.info / st.success / st.warning / st.error) */
+    /* This targets the actual alert container and its internal styling */
+    div[data-testid="stNotification"], 
+    div[role="alert"], 
+    .stAlert {{
+        background-color: #121E3E !important; /* Your Dark Navy */
         color: #FFFFFF !important;
         border: 1px solid {CITY_SKY_BLUE} !important;
-    }}
-    div[data-testid="stNotification"] p {{
-        color: #FFFFFF !important;
+        border-radius: 0.5rem;
     }}
 
-    /* 4. HEADERS & METRIC LABELS (The Sky Blue elements) */
+    /* This forces the text inside the alert to be white, overriding the default dark text */
+    div[role="alert"] div, 
+    div[role="alert"] p, 
+    div[data-testid="stNotificationContent"] p {{
+        color: #FFFFFF !important;
+        -webkit-text-fill-color: #FFFFFF !important;
+    }}
+
+    /* 4. HEADERS & METRIC LABELS */
     .main h1, .main h2, .main h3, 
     div[data-testid="stMetricLabel"] p {{
         color: {CITY_SKY_BLUE} !important;
@@ -91,9 +97,7 @@ if check_password():
         border-right: 1px solid {CITY_SKY_BLUE};
     }}
 
-    /* 8. TABLES - PRESERVE CONDITIONAL FORMATTING */
-    /* We style the headers and background, but we DO NOT use !important on cell text color.
-       This allows your Python red/green logic to override the default white. */
+    /* 8. TABLES */
     thead tr th {{
         background-color: {CITY_SKY_BLUE} !important;
         color: {CITY_NAVY} !important;
@@ -101,12 +105,18 @@ if check_password():
     }}
     tbody td, tbody td span {{
         background-color: #263868 !important;
-        color: #FFFFFF; /* No !important here */
+        color: #FFFFFF; 
     }}
 
-    /* 9. WIDGETS (Selectboxes, etc) */
+    /* 9. WIDGET LABELS */
     div[data-testid="stWidgetLabel"] p {{
         color: #FFFFFF !important;
+    }}
+
+    /* 10. ICON FIX (Optional) */
+    /* If you use icons in st.info, this makes them Sky Blue instead of default blue */
+    div[role="alert"] svg {{
+        fill: {CITY_SKY_BLUE} !important;
     }}
 
     </style>
